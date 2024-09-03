@@ -1,7 +1,7 @@
 function showSection(sectionId) {
     const sections = document.querySelectorAll('main section');
     sections.forEach(section => {
-        section.style.display = section.id === sectionId ? 'block' : 'none';
+        section.style.display = section.id === sectionId ? 'flex' : 'none';
     });
 }
 
@@ -55,4 +55,21 @@ document.getElementById('contactForm').addEventListener('submit', async function
     } catch (error) {
         alert('Error sending message.');
     }
+});
+
+// Ensure only the homepage is visible on initial load
+document.addEventListener('DOMContentLoaded', function() {
+    showSection('homepage');
+});
+
+document.getElementById('darkModeToggle').addEventListener('click', function() {
+    const currentTheme = document.body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', newTheme);
+
+    // Update buttons to match the theme
+    const buttons = document.querySelectorAll('header button');
+    buttons.forEach(button => {
+        button.setAttribute('data-theme', newTheme);
+    });
 });

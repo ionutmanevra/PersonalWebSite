@@ -21,33 +21,134 @@
     }
 }
 
-#homepage,
-#projects,
-#about{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 100vh; 
-    padding: 2em 1em; 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 
 body {
-    background: linear-gradient(to bottom, #66BB6A, #388E3C);
+    background: linear-gradient(45deg, #66BB6A, #2E7D32);
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Light Theme */
+body[data-theme="light"] {
+    background: linear-gradient(45deg, #66BB6A, #2E7D32);
+}
+
+header[data-theme="light"] {
+    background: linear-gradient(135deg, #388E3C, #66BB6A);
+}
+
+/* Dark Theme */
+body[data-theme="dark"] {
+    background: linear-gradient(45deg, #2B2B2B, #1C1C1C);
+    color: #DDDDDD;
+}
+
+header[data-theme="dark"] {
+    background: linear-gradient(135deg, #2E2E2E, #454545);
 }
 
 header button {
     padding: 0.5em 1em;
     margin: 0 0.5em;
     border: none;
-    border-radius: 4px;
-    font-size: 1em;
+    border-radius: 20px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header button[data-theme="light"] {
+    background-color: #66BB6A;
+    color: #fff;
+}
+
+header button[data-theme="dark"] {
+    background-color: #454545;
+    color: #ddd;
+}
+
+header button:hover {
+    animation: buttonPress 0.3s ease;
+    background-color: #555555;
+}
+
+/* Dark mode specific section backgrounds */
+#homepage[data-theme="dark"],
+#about[data-theme="dark"],
+#projects[data-theme="dark"],
+#cv[data-theme="dark"],
+.contact_s[data-theme="dark"] {
+    background: linear-gradient(45deg, #333, #222);
+}
+
+#cv h2[data-theme="dark"],
+#cv h3[data-theme="dark"],
+#cv p[data-theme="dark"],
+.contact_s label[data-theme="dark"],
+footer[data-theme="dark"] {
+    color: #DDDDDD;
+}
+
+.progress-bar[data-theme="dark"] {
+    background-color: #555;
+}
+
+section#projects .progress[data-theme="dark"] {
+    background-color: #333;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+header {
+    background: linear-gradient(135deg, #388E3C, #66BB6A);
+    padding: 0.75em 0;
+    text-align: center;
+    position: relative;
+    font-size: 1.2em;
+    animation: slideIn 1s ease-in-out;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+header button {
+    padding: 0.5em 1em;
+    margin: 0 0.5em;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9em;
     background-color: #66BB6A;
     color: #fff;
     cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 header button:hover {
@@ -55,25 +156,33 @@ header button:hover {
     background-color: #388E3C;
 }
 
-html {
-    scroll-behavior: smooth;
+section {
+    display: none;
+    animation: fadeIn 1s ease-in-out;
+    padding: 2em 1em;
 }
 
-body {
-    font-family: sans-serif;
-    color: black;
-}
-
-header {
-    background-color: #66BB6A;
-    background: linear-gradient(135deg, #388E3C, #66BB6A);
-    padding: 1em 0;
-    text-align: center;
-    position: relative;
-    font-size: 1.2em;
-    animation: slideIn 1s ease-in-out;
+#homepage {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 90vh;
+    background: linear-gradient(45deg, #388E3C, #1B5E20);
+}
+
+#about{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    padding: 2em 1em;
+    background: linear-gradient(45deg, #A5D6A7, #81C784);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 #projects ul {
@@ -89,36 +198,25 @@ header {
     height: 1em;
 }
 
-section#projects {
-    display: none;
-}
-
-section#projects h2 {
-    color: #000000;
-}
-
 section#projects .project-content {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     gap: 2em;
     margin-top: 1em;
 }
 
-section#projects .project-photo {
-    max-width: 400px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
+.project-photo {
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 3px;
+    margin: 20px;
+    transition: transform 0.3s ease;
 }
 
-
-
-section#projects .progress-bar {
-    background-color: #eee;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 0.5em;
-    height: 1em;
+.project-photo:hover {
+    transform: scale(1.05);
 }
 
 section#projects .progress {
@@ -130,140 +228,7 @@ section#projects .progress {
     border-radius: 8px;
 }
 
-#cv h2 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
-    color: #333;
-}
-
-#cv h3 {
-    font-size: 1.5em;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-    color: #555;
-}
-
-#cv p {
-    font-size: 1em;
-    line-height: 1.6;
-    color: #666;
-    margin-bottom: 1em;
-}
-
-#cv .skills,
-#cv .languages,
-#cv .volunteering,
-#cv .hobbies {
-    margin-top: 1.5em;
-}
-
-#cv .skills p,
-#cv .languages p,
-#cv .volunteering p,
-#cv .hobbies p {
-    margin: 0.5em 0;
-}
-
-#cv .skills span,
-#cv .languages span,
-#cv .volunteering span,
-#cv .hobbies span {
-    display: block;
-    font-size: 0.9em;
-    color: #999;
-}
-
-#contact input,
-#contact textarea,
-#contact button {
-    padding: 0.75em;
-    margin-bottom: 1em;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1em;
-    background-color: #f9f9f9;
-    max-width: 300px;
-    box-sizing: border-box;
-}
-
-#contact textarea {
-    max-height: 200px;
-    overflow: auto;
-    resize: vertical;
-}
-
-#contact label {
-    display: block;
-    margin-bottom: 0.5em;
-}
-
-#contact button {
-    background-color: #388E3C;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#contact button:hover {
-    background-color: #2E7D32;
-}
-#contact_s {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    margin: 0 auto; /* Add this line to center the element horizontally */
-}
-
-#contact_s form {
-    width: 100%;
-    max-width: 400px; /* Limit the form width */
-    padding: 1em;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-
-#contact_s input,
-#contact_s textarea {
-    width: 100%;
-    padding: 0.75em;
-    margin-bottom: 1em;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-sizing: border-box;
-}
-
-#contact_s button {
-    padding: 0.75em;
-    margin-bottom: 1em;
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    background-color: #388E3C;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#contact_s button:hover {
-    background-color: #2E7D32;
-}
-
-section {
-    display: none;
-}
-
-#homepage {
-    display: block;
-}
-
-
-
+/* Leaf Animation */
 .leaf {
     position: absolute;
     top: -50px;
@@ -274,6 +239,7 @@ section {
     border-radius: 50%;
     opacity: 0.7;
     animation: leafs 4s infinite linear;
+    z-index: 0;
 }
 
 .leaf:nth-child(2) {
@@ -306,6 +272,128 @@ section {
     animation-delay: 5s;
 }
 
+/* CV Section */
+#cv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #A5D6A7, #81C784);
+    border-radius: 10px;
+    padding: 2em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#cv h2 {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+    color: #333;
+}
+
+#cv h3 {
+    font-size: 1.75em;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    color: #555;
+}
+
+#cv p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 1em;
+}
+
+#cv .section {
+    margin-top: 2em;
+    width: 100%;
+    max-width: 800px;
+    background-color: #ffffff;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+#cv .section h3 {
+    color: #388E3C;
+    margin-bottom: 0.75em;
+    text-align: center;
+}
+
+.contact_s {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #A5D6A7, #81C784);
+    border-radius: 10px;
+    padding: 2em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact_s form {
+    width: 100%;
+    max-width: 600px;
+    padding: 2em;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.contact_s label {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 0.5em;
+    display: block;
+    text-align: left;
+}
+
+.contact_s input,
+.contact_s textarea {
+    max-height: 300px;
+    max-width: 300px;
+    padding-left: 323px;
+    width: 100%;
+    padding: 0.75em;
+    margin-bottom: 1em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+    color: #333;
+}
+
+.contact_s textarea {
+    resize: vertical;
+    max-height: 150px;
+    min-height: 100px;
+    float:left;   
+}
+
+.contact_s button {
+    padding: 0.9em 2em;
+    margin-top: 1em;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.2em;
+    background-color: #388E3C;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    float:right;
+}
+
+.contact_s button:hover {
+    background-color: #2E7D32;
+    transform: scale(1.05);
+}
+
 footer {
     background-color: #66BB6A;
     padding: 0.5em;
@@ -315,4 +403,7 @@ footer {
     bottom: 0;
     width: 100%;
     height: 40px;
+    color: #fff;
+    font-size: 1em;
+    z-index: 1000;
 }
